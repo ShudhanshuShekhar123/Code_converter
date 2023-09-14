@@ -13,21 +13,42 @@ const apiopen = new openai({
 });
 
 
-app.post("/convert", (req, res) => {
+app.post("/convert",  async (req, res) => {
   const { prompt, code } = req.body
 
-  async function main() {
+  // async function main() {
 
-    const completion = await apiopen.chat.completions.create({
+  //   const completion = await apiopen.chat.completions.create({
+  //     messages: [{ role: 'user', content: `Just convert   for the  ${code}  into ${prompt} and dont explain the code ` }],
+  //     model: 'gpt-3.5-turbo',
+  //   });
+
+  //   console.log(completion.choices);
+  //   res.send(completion.choices[0].message.content)
+  // }
+
+
+  try {
+    const response = await axios.post('https://api.openai.com/v1/chat/completions', {
       messages: [{ role: 'user', content: `Just convert   for the  ${code}  into ${prompt} and dont explain the code ` }],
-      model: 'gpt-3.5-turbo',
+      model: "gpt-3.5-turbo",
+    
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
+      },
     });
 
-    console.log(completion.choices);
-    res.send(completion.choices[0].message.content)
+    const convertedcode = response.data.choices[0].message.content;
+    console.log(convertedcode)
+    res.json({ convertedcode });
+  } catch (error) {
+    console.error('Error converting code:', error);
+    res.status(500).json({ error });
   }
 
-  main();
+  // main();
 
 })
 
