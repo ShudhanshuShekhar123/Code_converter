@@ -12,30 +12,11 @@ const apiopen = new openai({
 
 app.post("/convert", (req,res)=>{
     const {prompt, code} = req.body
-    // console.log(req.body)
-    let newprompt;
-    if(prompt ==="java"){
-       newprompt = `Just convert the ${code} into ${prompt} and dont explain the code `
-    }else 
-    if(prompt ==="python"){
-        newprompt = `Just convert   for the  ${code}  into ${prompt} and dont explain the code `
-     }
-     else 
-     if(prompt ==="c++"){
-         newprompt = `Just convert   for the  ${code}  into ${prompt} and dont explain the code `
-      }
-      else 
-      if(prompt ==="javascript"){
-          newprompt = `Just convert 
-            for  the  ${code}  into ${prompt} and dont explain the code `
-       }
-  
- 
 
     async function main() {
 
         const completion = await apiopen.chat.completions.create({
-          messages: [{ role: 'user', content: newprompt}],
+          messages: [{ role: 'user', content: `Just convert   for the  ${code}  into ${prompt} and dont explain the code `}],
           model: 'gpt-3.5-turbo',
         });
       
@@ -44,8 +25,6 @@ app.post("/convert", (req,res)=>{
       }
       
       main();
-
-
 
 })
 
@@ -65,7 +44,6 @@ app.post("/choice",async (req, res)=>{
 
     //Using chatgpt trxt completion api 
 
-
     // async function main() {
 
     //     const completion = await apiopen.chat.completions.create({
@@ -79,7 +57,7 @@ app.post("/choice",async (req, res)=>{
       
     //   main();
 
-    
+
     try {
         const response = await axios.post('https://api.openai.com/v1/chat/completions', {
           messages:[{"role":"user","content":newcode}],
@@ -102,16 +80,6 @@ app.post("/choice",async (req, res)=>{
   
 
 })
-
-
-
-
-
-
-
-
-
-
 
 app.listen(7000, ()=>{
     console.log("listening at port 7000")
