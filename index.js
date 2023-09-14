@@ -7,9 +7,6 @@ app.use(cors());
 app.use(express.json())
 
 
-const apiopen = new openai({
-  apiKey: process.env.OPENAI_API_KEY
-});
 
 
 app.post("/convert",  async (req, res) => {
