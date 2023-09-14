@@ -53,7 +53,7 @@ app.post("/choice", async (req, res) => {
   const { code, prompt } = req.body
   let newcode;
   if (prompt == "debug") {
-    newcode = `tell the errors in the ${code} and then provide the corrrect code but keep the xplaination to the point and short`
+    newcode = `debug  the ${code} and then provide the corrrect code but keep the explaination to the point and short`
   } else
     if (prompt == "check quality") {
       newcode = `Please provide a  code quality assessment  in brief for the given code   ${code}. Consider the following parameters: 1. Code Consistency, 2.Code Performance,3.Code Documentation,4.Error Handling, 5.Code Testability, 6.Code Complexity, 7.Code Duplication, 8.Code Readability  and aslo provide evaluation score in % every parameter an at last give overall score.`
